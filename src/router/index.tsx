@@ -7,6 +7,8 @@ import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
 import ManageLayout from "../layouts/ManageLayout";
 import List from '../pages/manage/List'
+import Star from "../pages/manage/Star";
+import Trash from "../pages/manage/Trash";
 
 // import Edit from '../pages/question/Edit'
 // import Stat from '../pages/question/Stat'
@@ -32,12 +34,16 @@ const router = createBrowserRouter([
                         path: 'list',
                         element: <List/>,
                     },
+                    {
+                        path: 'star',
+                        element: <Star/>,
+                    },
+                    {
+                        path: 'trash',
+                        element: <Trash/>,
+                    },
                 ],
-            },
-            {
-                path: '*', // 404 路由配置，都写在最后（兜底）
-                element: <NotFound/>,
-            },
+            }
         ],
     },
     {

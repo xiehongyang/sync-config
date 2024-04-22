@@ -1,42 +1,30 @@
-import React, {FC} from 'react'
+import React, {FC, useState} from 'react'
 import {Outlet, useNavigate, useLocation} from 'react-router-dom'
 import {Button, Space, Divider, message, Spin} from 'antd'
-import {PlusOutlined, BarsOutlined} from '@ant-design/icons'
+import { PlusOutlined, BarsOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons'
 import {useRequest} from 'ahooks'
 // import {createQuestionService} from '../services/question'
 import styles from './ManageLayout.module.scss'
 import useLoadUserData from "../hooks/useLoadUserData";
 import useNavPage from "../hooks/useNavPage";
+import {createQuestionService} from "../services/question";
 
 const ManageLayout: FC = () => {
     const {waitingUserData} = useLoadUserData();
     useNavPage(waitingUserData);
     const nav = useNavigate()
     const {pathname} = useLocation()
-
-    // const [loading, setLoading] = useState(false)
-    // async function handleCreateClick() {
-    //   setLoading(true)
-    //   const data = await createQuestionService()
-    //   const { id } = data || {}
-    //   if (id) {
-    //     nav(`/question/edit/${id}`)
-    //     message.success('创建成功')
-    //   }
-    //   setLoading(false)
-    // }
-
-    // const {
-    //     loading,
-    //     // error,
-    //     run: handleCreateClick,
-    // } = useRequest(createQuestionService, {
-    //     manual: true,
-    //     onSuccess(result) {
-    //         nav(`/question/edit/${result.id}`)
-    //         message.success('创建成功')
-    //     },
-    // })
+    const {
+        loading,
+        // error,
+        run: handleCreateClick,
+    } = useRequest(createQuestionService, {
+        manual: true,
+        onSuccess(result) {
+            nav(`/question/edit/${result}`)
+            message.success('Create Success');
+        },
+    })
 
     return (
         waitingUserData ? (
@@ -51,10 +39,10 @@ const ManageLayout: FC = () => {
                             type="primary"
                             size="large"
                             icon={<PlusOutlined/>}
-                            // onClick={handleCreateClick}
-                            // disabled={loading}
+                            onClick={handleCreateClick}
+                            disabled={loading}
                         >
-                            Create Config Page
+                            Create Config
                         </Button>
                         <Divider style={{borderTop: 'transparent'}}/>
                         <Button
@@ -63,7 +51,23 @@ const ManageLayout: FC = () => {
                             icon={<BarsOutlined/>}
                             onClick={() => nav('/manage/list')}
                         >
-                            My Config pages
+                            My Config
+                        </Button>
+                        <Button
+                            type={pathname.startsWith('/manage/star') ? 'default' : 'text'}
+                            size="large"
+                            icon={<StarOutlined />}
+                            onClick={() => nav('/manage/star')}
+                        >
+                            Star Config
+                        </Button>
+                        <Button
+                            type={pathname.startsWith('/manage/trash') ? 'default' : 'text'}
+                            size="large"
+                            icon={<DeleteOutlined />}
+                            onClick={() => nav('/manage/trash')}
+                        >
+                            Trash
                         </Button>
                     </Space>
                 </div>

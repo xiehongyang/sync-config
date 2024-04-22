@@ -10,13 +10,14 @@ const Lib: FC = () => {
     const dispatch = useDispatch();
     const genComponent = useCallback(
         (c: ComponentConfType) => {
-            const {Component, title, type} = c;
+            const {Component, title, type, defaultProps} = c;
             const feId = nanoid();
             function handleClick() {
                 dispatch(addComponent({
                     fe_id: nanoid(),
                     title: title,
-                    type: type
+                    type: type,
+                    props: defaultProps
                 }));
             }
 

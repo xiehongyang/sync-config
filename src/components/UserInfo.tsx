@@ -3,10 +3,11 @@ import {Avatar, Button, Dropdown, Menu, MenuProps, message} from 'antd'
 import {Link, useNavigate} from 'react-router-dom'
 import {UserOutlined} from '@ant-design/icons'
 import {useDispatch} from 'react-redux'
-import {HOME_PATHNAME} from '../router'
-import {removeToken} from '../utils/user-token'
+import {HOME_PATHNAME, MANAGE_INDEX_PATHNAME} from '../router'
+import {getToken, removeToken} from '../utils/user-token'
 import useGetUserInfo from '../hooks/useGetUserInfo'
 import {logoutReducer} from '../store/userReducer'
+import {popupWindow} from "../utils/pop-up-window";
 
 const UserInfo: FC = () => {
     const nav = useNavigate()
@@ -41,9 +42,11 @@ const UserInfo: FC = () => {
     ];
 
     function onClickLogin() {
-        window.open('http://localhost:3000/user/google'
-            , '_blank'
-            , 'height=500,width=500,top=0,left=0');
+        if (getToken()) {
+            nav(MANAGE_INDEX_PATHNAME);
+            return;
+        }
+        popupWindow('http://localhost:3000/user/google', 'Google Auth', 500, 500);
     }
 
     const UserInfo = (

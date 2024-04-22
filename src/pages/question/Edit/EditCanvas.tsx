@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 import classNames from "classnames";
 import SortableContainer from "../../../components/DragSortable/SortableContainer";
 import SortableItem from "../../../components/DragSortable/SortableItem";
+import {Spin} from "antd";
 
 
 function genComponent(componentInfo: ComponentInfoType) {
@@ -17,9 +18,19 @@ function genComponent(componentInfo: ComponentInfoType) {
     return <Component {...props} />;
 }
 
-const EditCanvas: FC = () => {
+type PropsType = {
+    loading: boolean
+}
+const EditCanvas: FC<PropsType> = ({loading}) => {
+
     const dispatch = useDispatch();
     const {componentList, selectedId} = useGetComponentInfo();
+
+    if (loading) {
+        return <div style={{textAlign: "center", marginTop: "24px" }}>
+            <Spin />
+        </div>
+    }
 
     function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>, id: string) {
         event.stopPropagation();

@@ -3,6 +3,7 @@ import {Space, Tabs} from "antd";
 import {FileTextOutlined, SettingOutlined} from '@ant-design/icons'
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 import PageSetting from "../Edit/PageSetting";
+import ComponentProp from "../../../pages/question/Edit/ComponentProp";
 
 
 enum TAB_KEYS {
@@ -10,7 +11,8 @@ enum TAB_KEYS {
     SETTING_KEY = 'setting'
 }
 
-const RightPanel: FC = () => {
+const
+    RightPanel: FC = () => {
 
     const [activeKey, setActiveKey] = useState(TAB_KEYS.PROP_KEY);
     const {selectedId} = useGetComponentInfo();
@@ -32,7 +34,7 @@ const RightPanel: FC = () => {
                     Attribute
                 </Space>
             ),
-            children: <div>'Todo...'</div>
+            children: <ComponentProp />
         },
         {
             key: TAB_KEYS.SETTING_KEY,

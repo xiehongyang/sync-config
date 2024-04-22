@@ -18,10 +18,7 @@ export type ComponentStateType = {
 
 const INIT_STATE: ComponentStateType = {
     selectedId: '',
-    componentList: [
-        {fe_id: '2', type: 'questionInput', title: 'input'},
-        {fe_id: '1', type: 'questionTitle', title: 'title'},
-    ]
+    componentList: []
 }
 
 export const componentsSlice = createSlice({
@@ -45,8 +42,21 @@ export const componentsSlice = createSlice({
             }
             state.selectedId = newComponent.fe_id;
         },
+        changeComponentProps: (
+            state: ComponentStateType,
+            action: PayloadAction<{ fe_id: string; newProps: ComponentPropsType }>
+        ) => {
+            const {fe_id, newProps} = action.payload
+            const curComp = state.componentList.find(c => c.fe_id === fe_id)
+            if (curComp) {
+                curComp.props = {
+                    ...curComp.props,
+                    ...newProps,
+                }
+            }
+        },
         removeSelectedComponent: (state: ComponentStateType) => {
-            const { componentList = [], selectedId: removeId } = state;
+            const {componentList = [], selectedId: removeId} = state;
             state.selectedId = getNextSelectedId(removeId, componentList);
             const index = componentList.findIndex(c => c.fe_id === removeId);
             componentList.splice(index, 1);
@@ -69,6 +79,7 @@ export const {
     resetComponents,
     changeSelectedId,
     addComponent,
+    changeComponentProps,
     changeComponentTitle,
     moveComponent,
     removeSelectedComponent

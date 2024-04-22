@@ -12,7 +12,9 @@ instance.interceptors.request.use(
         config.headers['Authorization'] = `Bearer ${getToken()}` // JWT
         return config
     },
-    error => Promise.reject(error)
+    error => {
+        Promise.reject(error)
+    }
 )
 
 

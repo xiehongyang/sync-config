@@ -6,10 +6,12 @@ import {changeSelectedId} from "../../../store/componentReducer";
 import LeftPanel from "../Edit/LeftPanel";
 import EditHeader from "../../../pages/question/Edit/EditHeader";
 import RightPanel from "../Edit/RightPanel";
+import useLoadQuestionData from "../../../hooks/useLoadQuestionData";
 
 const Edit: FC = () => {
 
     const dispatch = useDispatch();
+    const { loading } = useLoadQuestionData();
     function clearSelected() {
         dispatch(changeSelectedId(''))
     }
@@ -23,7 +25,7 @@ const Edit: FC = () => {
                     </div>
                     <div className={styles.main} onClick={clearSelected}>
                         <div className={styles['canvas-wrapper']}>
-                            <EditCanvas />
+                            <EditCanvas loading={loading} />
                         </div>
                     </div>
                     <div className={styles.right}>
