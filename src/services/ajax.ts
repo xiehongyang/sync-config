@@ -8,7 +8,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     config => {
-        config.baseURL = 'http://localhost:3000';
+        config.baseURL = process.env.REACT_APP_BASE_URL;
         config.headers['Authorization'] = `Bearer ${getToken()}` // JWT
         return config
     },
