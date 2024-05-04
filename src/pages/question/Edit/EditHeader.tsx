@@ -1,15 +1,13 @@
 import {Button, Input, Modal, Space, Typography} from "antd";
 import React, {ChangeEvent, FC, useState} from "react";
 import styles from './EditHeader.module.scss';
-import {LeftOutlined} from '@ant-design/icons';
+import {CloudUploadOutlined, EditOutlined, LeftOutlined, LoadingOutlined} from '@ant-design/icons';
 import {useNavigate, useParams} from "react-router-dom";
 import useGetPageInfo from "../../../hooks/useGetPageInfo";
-import {EditOutlined, CloudUploadOutlined, LoadingOutlined} from "@ant-design/icons";
 import {useDispatch} from "react-redux";
 import {changePageTitle} from "../../../store/PageInfoReducer";
 import EditToolbar from "../../../pages/question/Edit/EditToolbar";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
-import {getComponentConfByType} from "../../../components/QuestionComponents";
 import {useDebounceEffect, useRequest} from "ahooks";
 import {updateQuestionService} from "../../../services/question";
 
@@ -68,11 +66,29 @@ const SaveButton: FC = () => {
 
 const EditHeader: FC = () => {
     const {componentList} = useGetComponentInfo();
+    const [configJson, setConfigJson] = useState(Object);
     const nav = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     function onCheckConfig() {
+        const newConfigJson = {
+            "HorizonLayout": componentList.map(c => ({
+                "layout": c.type,
+                ...c.props
+            }))
+        }
+        setConfigJson(newConfigJson);
         setIsModalOpen(true);
+    }
+
+    function onDownloadConfig() {
+        const link = document.createElement("a");
+        link.href = `data:text/json;chatset=utf-8,${encodeURIComponent(
+            JSON.stringify(configJson, null, 2)
+        )}`;
+        link.download = "config_en.json";
+
+        link.click();
     }
 
     return (
@@ -99,8 +115,10 @@ const EditHeader: FC = () => {
                     </div>
                 </div>
             </div>
-            <Modal title="Config Code" open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
-                <pre className={styles['config-area']}>{JSON.stringify(componentList, null, 2)}</pre>
+            <Modal title="Config Code" open={isModalOpen} okText={"Download"} cancelText={"Close"} onOk={onDownloadConfig}
+                   onCancel={() => setIsModalOpen(false)}>
+                {/*<pre className={styles['config-area']}>{JSON.stringify(componentList, null, 2)}</pre>*/}
+                <pre className={styles['config-area']}>{JSON.stringify(configJson, null, 2)}</pre>
             </Modal>
         </>
     )

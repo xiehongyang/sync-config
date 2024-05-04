@@ -7,6 +7,7 @@ import {changeSelectedId, changeComponentTitle, moveComponent} from "../../../st
 import {Input, InputRef} from "antd";
 import SortableContainer from "../../../components/DragSortable/SortableContainer";
 import SortableItem from "../../../components/DragSortable/SortableItem";
+import {DragOutlined} from '@ant-design/icons'
 
 const Layers: FC = () => {
     const {componentList, selectedId} = useGetComponentInfo();
@@ -63,7 +64,9 @@ const Layers: FC = () => {
                                         title
                                 }
                             </div>
-                            <div className={styles.handler}></div>
+                            <div className={styles.handler}>
+                                <DragOutlined />
+                            </div>
                         </div>
                     </SortableItem>);
             })}

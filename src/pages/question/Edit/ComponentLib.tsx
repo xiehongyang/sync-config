@@ -2,7 +2,7 @@ import {FC, useCallback, useId} from "react";
 import {componentConfList, ComponentConfType} from "../../../components/QuestionComponents";
 import styles from './ComponentLib.module.scss';
 import {useDispatch} from "react-redux";
-import { nanoid } from 'nanoid'
+import {nanoid} from 'nanoid'
 import {addComponent} from "../../../store/componentReducer";
 
 
@@ -15,7 +15,7 @@ const Lib: FC = () => {
             function handleClick() {
                 dispatch(addComponent({
                     fe_id: nanoid(),
-                    title: title,
+                    ...(title && {title}),
                     type: type,
                     props: defaultProps
                 }));

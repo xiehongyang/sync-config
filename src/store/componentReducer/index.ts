@@ -7,7 +7,7 @@ import {getNextSelectedId} from "../utils";
 export type ComponentInfoType = {
     fe_id: string;
     type: string;
-    title: string;
+    title?: string;
     props?: ComponentPropsType
 }
 

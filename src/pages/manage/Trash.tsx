@@ -14,13 +14,11 @@ const Trash: FC = () => {
     const {data = {}, loading} = useLoadQuestionListData({isDelete: true})
     const {list = [], total = 0} = data
 
-    // 记录选中的 id
     const [selectedIds, setSelectedIds] = useState<string[]>([])
     const tableColumns = [
         {
             title: 'Title',
             dataIndex: 'title',
-            // key: 'title', // 循环列的 key ，它会默认取 dataIndex 的值
         },
         {
             title: 'Created At',
@@ -28,7 +26,7 @@ const Trash: FC = () => {
         },
     ]
 
-    // 可以把 JSX 片段定义为一个变量
+
     const TableElem = (
         <>
             <div style={{marginBottom: '16px'}}>
