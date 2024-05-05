@@ -40,7 +40,7 @@ const Home: FC = () => {
             nav(MANAGE_INDEX_PATHNAME);
             return;
         }
-        popupWindow('http://localhost:3000/user/google', 'Google Auth', 500, 500);
+        popupWindow(process.env.REACT_APP_BASE_URL + '/user/google', 'Google Auth', 500, 500);
     }
 
     return (
