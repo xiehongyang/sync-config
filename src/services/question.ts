@@ -27,10 +27,22 @@ export async function updateQuestionService(id: string, opt: { [key: string]: an
     return data;
 }
 
+export async function duplicateQuestionService(id: string): Promise<ResDataType> {
+    const url = `/works/duplicate/${id}`
+    const data = (await axios.post(url)) as ResDataType
+    return data
+}
+
 export async function getQuestionListService(
     opt: Partial<SearchOption> = {}
 ): Promise<ResDataType> {
     const url = '/works'
     const data = (await axios.get(url, { params: opt })) as ResDataType
+    return data
+}
+
+export async function deleteQuestionsService(ids: string[]): Promise<ResDataType> {
+    const url = '/works'
+    const data = (await axios.delete(url, {data: ids} )) as ResDataType
     return data
 }

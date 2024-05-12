@@ -13,7 +13,7 @@ function useLoadQuestionListData(opt: Partial<OptionType> = {}) {
     const [searchParams] = useSearchParams();
     const {isStar , isDelete} = opt;
 
-    const {data, loading, error} = useRequest(async () => {
+    const {data, loading, error, refresh} = useRequest(async () => {
         const keyword = searchParams.get(LIST_SEARCH_PARAM_KEY) || '';
         const pageIndex = parseInt(searchParams.get(LIST_PAGE_INDEX_PARAM_KEY) || '') || 0;
         const pageSize = parseInt(searchParams.get(LIST_PAGE_SIZE_PARAM_KEY) || '') || LIST_PAGE_SIZE ;
@@ -23,7 +23,7 @@ function useLoadQuestionListData(opt: Partial<OptionType> = {}) {
     }, {
         refreshDeps: [searchParams]
     })
-    return {data, loading, error};
+    return {data, loading, error, refresh};
 }
 
 export default useLoadQuestionListData;

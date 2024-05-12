@@ -9,6 +9,7 @@ import ManageLayout from "../layouts/ManageLayout";
 import List from '../pages/manage/List'
 import Star from "../pages/manage/Star";
 import Trash from "../pages/manage/Trash";
+import PostToWP from "../pages/PostToWP/index";
 
 // import Edit from '../pages/question/Edit'
 // import Stat from '../pages/question/Stat'
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
                         element: <Trash/>,
                     },
                 ],
+            },
+            {
+                path: 'post-to-wp',
+                element: <PostToWP />
             }
         ],
     },

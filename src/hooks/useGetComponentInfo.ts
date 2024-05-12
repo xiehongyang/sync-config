@@ -5,7 +5,7 @@ import {StateType} from "../store/index";
 
 function useGetComponentInfo() {
 
-    const components = useSelector<StateType>(state => state.components) as ComponentStateType;
+    const components = useSelector<StateType>(state => state.components.present) as ComponentStateType;
 
     const { componentList = [], selectedId } = components;
 

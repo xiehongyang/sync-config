@@ -26,6 +26,10 @@ const ManageLayout: FC = () => {
         },
     })
 
+    function handleCreatePost() {
+        nav(`/post-to-wp`);
+    }
+
     return (
         waitingUserData ? (
             <div style={{textAlign: 'center', marginTop: '60px'}}>
@@ -43,6 +47,15 @@ const ManageLayout: FC = () => {
                             disabled={loading}
                         >
                             Create Config
+                        </Button>
+                        <Button
+                            type="default"
+                            size="large"
+                            icon={<PlusOutlined/>}
+                            onClick={handleCreatePost}
+                            disabled={loading}
+                        >
+                            Create Post
                         </Button>
                         <Divider style={{borderTop: 'transparent'}}/>
                         <Button

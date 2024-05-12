@@ -4,7 +4,8 @@ import {Button, Divider, message, Modal, Popconfirm, Space} from "antd";
 import {EditOutlined, StarOutlined, CopyOutlined, DeleteOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
 import {Link, useNavigate} from "react-router-dom";
 import {useRequest} from "ahooks";
-import {updateQuestionService} from "../services/question";
+import {duplicateQuestionService, updateQuestionService} from "../services/question";
+import {convertDateTime} from "../utils/convert-datetime";
 
 const {confirm} = Modal
 type PropsType = {
@@ -28,9 +29,16 @@ const QuestionCard: FC<PropsType> = (props) => {
         }
     })
 
-    function duplicate() {
-
-    }
+    const { loading: duplicateLoading, run: duplicate } = useRequest(
+        async () => await duplicateQuestionService(uuid),
+        {
+            manual: true,
+            onSuccess(result) {
+                message.success('copy successful');
+                nav(`/question/edit/${result.id}`);
+            },
+        }
+    )
 
     const [isDeletedState, setIsDeletedState] = useState(false)
     const { loading: deleteLoading, run: deleteQuestion } = useRequest(
@@ -67,7 +75,7 @@ const QuestionCard: FC<PropsType> = (props) => {
                     </Link>
                 </div>
                 <div className={styles.right}>
-                    <span>{createdAt}</span>
+                    <span>{convertDateTime(createdAt)}</span>
                 </div>
             </div>
             <Divider/>
@@ -98,6 +106,7 @@ const QuestionCard: FC<PropsType> = (props) => {
                             <Button type={"text"}
                                     icon={<CopyOutlined/>}
                                     size={"small"}
+                                    disabled={duplicateLoading}
                             >
                                 Copy
                             </Button>
